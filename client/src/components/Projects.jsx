@@ -1,17 +1,18 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { fetchProjects } from "./api/projectsApi";
-import Box from '@mui/joy/Box';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemDecorator from '@mui/joy/ListItemDecorator';
-import ListItemButton from '@mui/joy/ListItemButton';
-import Typography from '@mui/joy/Typography';
-import Home from '@mui/icons-material/Home';
+import { useNavigate } from "react-router-dom";
+// import Box from '@mui/joy/Box';
+// import List from '@mui/joy/List';
+// import ListItem from '@mui/joy/ListItem';
+// import ListItemDecorator from '@mui/joy/ListItemDecorator';
+// import ListItemButton from '@mui/joy/ListItemButton';
+// import Typography from '@mui/joy/Typography';
+// import Home from '@mui/icons-material/Home';
 
 export default function Projects() {
     const [projects, setProjects] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const getProducts = async () => {
             try {
@@ -37,6 +38,11 @@ export default function Projects() {
         }
         return text;
     };
+
+    const handleNavigate = (projectId) => {
+        navigate(`/project/${projectId}`);
+    };
+
 
     return (
         <>
@@ -117,6 +123,7 @@ export default function Projects() {
                                 y: { duration: 0.7 },
                             }}
                             viewport={{ once: false, amount: 0.2 }}
+                            onClick={() => handleNavigate(project._id)}
                         >
                             <div className="relative p-3">
                                 <motion.img

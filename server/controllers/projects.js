@@ -190,3 +190,94 @@ export const deleteProjectById = async (req, res) => {
         });
     }
 };
+
+
+export const getProjectById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Validate ID
+        if (!id) {
+            throw new Error("Project ID is required.");
+        }
+
+        // Find the project by ID
+        const project = await $ProjectModel.findById(id);
+
+        if (!project) {
+            return res.status(404).send({
+                process: false,
+                message: "Project not found.",
+            });
+        }
+
+        // Success response
+        res.status(200).send({
+            process: true,
+            message: "Project fetched successfully.",
+            data: project,
+        });
+    } catch (error) {
+        res.status(400).send({
+            process: false,
+            message: error.message,
+        });
+    }
+};
+
+export const updateProject = async (req, res) => {
+    try {
+        const { title, description, projectLanguage, githubLink } = req.body;
+        const { projectId } = req.params;
+
+        // Validate project ID
+        if (!projectId) {
+            throw new Error("Project ID is required.");
+        }
+
+        const project = await $ProjectModel.findById(projectId);
+        if (!project) {
+            throw new Error("Project not found.");
+        }
+
+        // Assign new images if uploaded
+        const image1 = req.files.image1 ? req.files.image1[0].path : project.image1;
+        const image2 = req.files.image2 ? req.files.image2[0].path : project.image2;
+        const image3 = req.files.image3 ? req.files.image3[0].path : project.image3;
+        const image4 = req.files.image4 ? req.files.image4[0].path : project.image4;
+        const image5 = req.files.image5 ? req.files.image5[0].path : project.image5;
+
+        // Check if the provided language is valid
+        if (projectLanguage) {
+            const validLanguage = await $ProjectLanguageModel.findOne({ name: projectLanguage });
+            if (!validLanguage) {
+                throw new Error(`Invalid language: ${projectLanguage}. Please select a valid language.`);
+            }
+        }
+
+        // Update project details
+        project.title = title || project.title;
+        project.description = description || project.description;
+        project.projectLanguage = projectLanguage || project.projectLanguage;
+        project.githubLink = githubLink || project.githubLink;
+        project.image1 = image1;
+        project.image2 = image2;
+        project.image3 = image3;
+        project.image4 = image4;
+        project.image5 = image5;
+
+        // Save updated project
+        await project.save();
+
+        res.status(200).send({
+            process: true,
+            message: "Project updated successfully.",
+            data: project,
+        });
+    } catch (error) {
+        res.status(400).send({
+            process: false,
+            message: error.message,
+        });
+    }
+};

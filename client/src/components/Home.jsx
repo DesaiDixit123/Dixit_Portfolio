@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import bg_img from "../assets/Dixit.png";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import Projects from "./Projects";
 import { LuContactRound } from "react-icons/lu";
 import { RxResume } from "react-icons/rx";
@@ -143,34 +143,29 @@ export const BackgroundHome = () => {
                     <p className={`text-sm md:text-lg lg:text-xl ${descriptionColors[titleIndex]}`}>
                         {descriptions[titleIndex]}
                     </p>
-                    <div className="flex justify-between">
-                        <div>
-                            <NavLink to={"/contact"}>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 md:space-x-5">
+    <NavLink to={"/contact"}>
+        <button className="transition-colors duration-300 ease-in-out bg-gradient-to-r from-[#2A3386] to-[#00659A] hover:shadow-[0px_0px_10px_2px_#718096] text-white font-semibold rounded-[20px] w-[200px] h-[70px] flex justify-center items-center p-3">
+            <span className="pr-[15px] text-[22px]"><LuContactRound /></span>
+            Contact Me
+        </button>
+    </NavLink>
+
+    <a
+        href="/Dixit_Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        <button className="transition-colors text-[20px] duration-300 ease-in-out bg-gradient-to-r from-[#2A3386] to-[#00659A] hover:shadow-[0px_0px_10px_2px_#718096] text-white font-semibold rounded-[20px] w-[200px] h-[70px] flex justify-center items-center p-3">
+            <span className="pr-[15px] text-[22px]">
+                <RxResume className="text-[22px] font-bold" />
+            </span>
+            Resume
+        </button>
+    </a>
+</div>
 
 
-                                <button className="transition-colors duration-300 ease-in-out bg-gradient-to-r from-[#2A3386] to-[#00659A]  hover:shadow-[0px_0px_10px_2px_#718096] text-white font-semibold rounded-[20px] w-[200px] h-[70px] flex justify-center items-center">
-                                    <span className="pr-[15px] text-[22px]"><LuContactRound /></span>
-                                    Contact Me
-                                </button>
-                            </NavLink>
-                        </div>
-
-                        <div className="pl-[40px]">
-                            <a
-                                href="/Dixit_Resume.pdf" // Correct relative path
-                                target="_blank"          // Opens in a new tab
-                                rel="noopener noreferrer"
-                            >
-                                <button className="transition-colors text-[20px] duration-300 ease-in-out bg-gradient-to-r from-[#2A3386] to-[#00659A] hover:shadow-[0px_0px_10px_2px_#718096] text-white font-semibold rounded-[20px] w-[200px] h-[70px] flex justify-center items-center">
-                                    <span className="pr-[15px] text-[22px]">
-                                        <RxResume className="text-[22px] font-bold" />
-                                    </span>
-                                    Resume
-                                </button>
-                            </a>
-                        </div>
-                        
-                    </div>
 
                 </motion.div>
 
